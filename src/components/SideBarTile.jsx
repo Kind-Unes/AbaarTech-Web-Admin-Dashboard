@@ -1,4 +1,3 @@
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faTableCells,
@@ -7,39 +6,46 @@ import {
   faUserGroup,
   faHeadphones,
   faGear,
+  faFlag,
+  faScrewdriver,
+  faUser,
 } from "@fortawesome/free-solid-svg-icons";
 
-function SideBarTile({ selectedIndex, tileIndex, setSelectedIndex }) {
-  let tileName;
+function SideBarTile({
+  selectedIndex,
+  tileIndex,
+  setSelectedIndex,
+  setActiveScreen,
+  tileName,
+}) {
   let icon;
 
   switch (tileIndex) {
     case 0:
-      tileName = "Dashboard";
       icon = faTableCells;
       break;
     case 1:
-      tileName = "Projects";
       icon = faBagShopping;
       break;
     case 2:
-      tileName = "Orders";
-      icon = faShoppingCart;
+      icon = faFlag;
       break;
     case 3:
-      tileName = "Customers";
-      icon = faUserGroup;
+      icon = faShoppingCart;
       break;
     case 4:
-      tileName = "Support";
-      icon = faHeadphones;
+      icon = faUserGroup;
       break;
     case 5:
-      tileName = "Settings";
+      icon = faUser;
+      break;
+    case 6:
       icon = faGear;
       break;
+    case 7:
+      icon = faScrewdriver;
+      break;
     default:
-      tileName = "X";
       icon = faGear;
       break;
   }
@@ -50,13 +56,16 @@ function SideBarTile({ selectedIndex, tileIndex, setSelectedIndex }) {
         ${selectedIndex === tileIndex ? "bg-blue-500" : "bg-white"}
         ${selectedIndex === tileIndex ? "text-white" : "text-[#667085]"} 
         ${
-          selectedIndex == tileIndex
+          selectedIndex === tileIndex
             ? ""
             : "hover:bg-blue-100 hover:text-blue-700"
         }  transition-colors duration-300 
         cursor-pointer mb-2 px-3 py-2 rounded-lg flex flex-row items-center
       `}
-      onClick={() => setSelectedIndex(tileIndex)}
+      onClick={() => {
+        setSelectedIndex(tileIndex);
+        setActiveScreen(tileName); // Update the active screen
+      }}
     >
       <FontAwesomeIcon
         className="translate-y-[1.5px] scale-[.87]"

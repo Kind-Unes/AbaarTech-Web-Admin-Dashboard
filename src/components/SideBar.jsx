@@ -4,9 +4,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faX } from "@fortawesome/free-solid-svg-icons";
 import SideBarTile from "./SideBarTile.jsx";
 
-function SideBar({ setIsNavBarOpen, isNavBarOpen }) {
-  const [selectedIndex, setSelectedIndex] = useState(0);
-
+function SideBar({
+  setIsNavBarOpen,
+  isNavBarOpen,
+  setActiveScreen,
+  selectedIndex,
+  setSelectedIndex,
+}) {
   return (
     <div
       className={`px-3 h-screen flex flex-col bg-white w-[250px] fixed top-0 left-0 z-50
@@ -21,7 +25,7 @@ function SideBar({ setIsNavBarOpen, isNavBarOpen }) {
       />
 
       {/* Logo Section */}
-      <div className="h-16 flex flex-col justify-center align-middle content-center">
+      <div className="h-24 flex flex-col justify-start pt-6 align-middle content-center">
         <img src="/src/assets/abar-text.png" alt="Logo" />
       </div>
 
@@ -29,41 +33,63 @@ function SideBar({ setIsNavBarOpen, isNavBarOpen }) {
       <SideBarTile
         selectedIndex={selectedIndex}
         tileIndex={0}
+        tileName="Dashboard"
         setSelectedIndex={setSelectedIndex}
-      ></SideBarTile>
-
+        setActiveScreen={setActiveScreen}
+      />
       <SideBarTile
         selectedIndex={selectedIndex}
         tileIndex={1}
+        tileName="Projects"
         setSelectedIndex={setSelectedIndex}
-      ></SideBarTile>
-
+        setActiveScreen={setActiveScreen}
+      />
       <SideBarTile
         selectedIndex={selectedIndex}
         tileIndex={2}
+        tileName="Countries"
         setSelectedIndex={setSelectedIndex}
-      ></SideBarTile>
-
+        setActiveScreen={setActiveScreen}
+      />
       <SideBarTile
         selectedIndex={selectedIndex}
         tileIndex={3}
+        tileName="Orders"
         setSelectedIndex={setSelectedIndex}
-      ></SideBarTile>
+        setActiveScreen={setActiveScreen}
+      />
+      <SideBarTile
+        selectedIndex={selectedIndex}
+        tileIndex={4}
+        tileName="Customers"
+        setSelectedIndex={setSelectedIndex}
+        setActiveScreen={setActiveScreen}
+      />
+      <SideBarTile
+        selectedIndex={selectedIndex}
+        tileIndex={7}
+        tileName="Services"
+        setSelectedIndex={setSelectedIndex}
+        setActiveScreen={setActiveScreen}
+      />
 
       {/* Spacer to push last tiles to the bottom */}
       <div className="grow"></div>
 
       <SideBarTile
         selectedIndex={selectedIndex}
-        tileIndex={4}
+        tileIndex={5}
+        tileName="Profile"
         setSelectedIndex={setSelectedIndex}
-      ></SideBarTile>
-
+        setActiveScreen={setActiveScreen}
+      />
       <SideBarTile
         selectedIndex={selectedIndex}
-        tileIndex={5}
+        tileIndex={6}
+        tileName="Settings"
         setSelectedIndex={setSelectedIndex}
-      ></SideBarTile>
+        setActiveScreen={setActiveScreen}
+      />
     </div>
   );
 }

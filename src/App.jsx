@@ -2,24 +2,21 @@ import React, { useState, useEffect } from "react";
 import "./global.css";
 import NavBar from "./components/NavBar";
 import SideBar from "./components/SideBar";
-import SalesMap from "./components/SalesMap";
-import SalesChart from "./components/SalesChart";
-import TopSellingProjects from "./components/TopSellingProjects";
-import SalesByLocation from "./components/SalesByLocation";
-import RecentOrders from "./components/RecentOrders";
-import MapLegend from "./components/MapLegend";
-import TopStats from "./components/TopStats";
+import Dashboard from "./pages/Dashboard";
+
+// Placeholder components for other screens
+const Projects = () => <div className="p-4">Projects Page (Placeholder)</div>;
+const Countries = () => <div className="p-4">Countries Page (Placeholder)</div>;
+const Orders = () => <div className="p-4">Orders Page (Placeholder)</div>;
+const Customers = () => <div className="p-4">Customers Page (Placeholder)</div>;
+const Support = () => <div className="p-4">Support Page (Placeholder)</div>;
+const Settings = () => <div className="p-4">Settings Page (Placeholder)</div>;
+const Services = () => <div className="p-4">Services Page (Placeholder)</div>;
 
 function App() {
-  const [geoJsonData, setGeoJsonData] = useState(null);
   const [isNavBarOpen, setIsNavBarOpen] = useState(true);
-
-  useEffect(() => {
-    fetch("/countries.geojson")
-      .then((response) => response.json())
-      .then((data) => setGeoJsonData(data))
-      .catch((error) => console.error("Error fetching GeoJSON data:", error));
-  }, []);
+  const [activeScreen, setActiveScreen] = useState("Dashboard"); // State for active screen
+  const [selectedIndex, setSelectedIndex] = useState(0);
 
   useEffect(() => {
     const smallSizeMediaQuery = window.matchMedia("(max-width: 768px)");
@@ -42,51 +39,48 @@ function App() {
     };
   }, []);
 
+  // Function to render the active screen
+  const renderActiveScreen = () => {
+    switch (activeScreen) {
+      case "Dashboard":
+        return <Dashboard isNavBarOpen={isNavBarOpen} />;
+      case "Projects":
+        return <Projects />;
+      case "Countries":
+        return <Countries />;
+      case "Orders":
+        return <Orders />;
+      case "Customers":
+        return <Customers />;
+      case "Services":
+        return <Services />;
+      case "Profile":
+        return <div className="p-4">Profile Page (Placeholder)</div>;
+      case "Settings":
+        return <Settings />;
+      default:
+        return <Dashboard isNavBarOpen={isNavBarOpen} />;
+    }
+  };
+
   return (
     <>
-      <SideBar isNavBarOpen={isNavBarOpen} setIsNavBarOpen={setIsNavBarOpen} />
-      <NavBar isNavBarOpen={isNavBarOpen} setIsNavBarOpen={setIsNavBarOpen} />
+      <SideBar
+        selectedIndex={selectedIndex}
+        setSelectedIndex={setSelectedIndex}
+        isNavBarOpen={isNavBarOpen}
+        setIsNavBarOpen={setIsNavBarOpen}
+        setActiveScreen={setActiveScreen}
+      />
+      <NavBar
+        setSelectedIndex={setSelectedIndex}
+        isNavBarOpen={isNavBarOpen}
+        setIsNavBarOpen={setIsNavBarOpen}
+        setActiveScreen={setActiveScreen}
+      />
 
-      <div
-        className={`${
-          isNavBarOpen ? "ml-[250px]" : ""
-        } transition-all p-6 duration-300 ease-in-out`}
-      >
-        {/* Add the Top Stats Section */}
-        <TopStats />
-
-        {/* Sales Map and Statistics Chart */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
-          <div className="bg-white p-6 shadow rounded-lg lg:col-span-1">
-            <h2 className="text-xl font-bold">Sales by Location</h2>
-            <div className="h-64 relative">
-              {geoJsonData ? (
-                <div className="absolute top-0 left-0 right-0 bottom-0">
-                  <SalesMap geoJsonData={geoJsonData} />
-                </div>
-              ) : (
-                <p>Loading map...</p>
-              )}
-            </div>
-            <MapLegend />
-          </div>
-
-          <div className="bg-white p-6 shadow rounded-lg lg:col-span-2 h-full">
-            <h2 className="text-xl font-bold">Statistics</h2>
-            <div className="h-96">
-              <SalesChart />
-            </div>
-          </div>
-        </div>
-
-        {/* Tables Section */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-          <TopSellingProjects />
-          <SalesByLocation />
-        </div>
-
-        <RecentOrders />
-      </div>
+      {/* Render the active screen */}
+      {renderActiveScreen()}
     </>
   );
 }
